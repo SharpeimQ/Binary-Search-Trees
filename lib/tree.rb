@@ -48,4 +48,16 @@ class Tree
     pre_order(node.left)
     pre_order(node.right)
   end
+
+  def insert(value, root)
+    return Node.new(value) if root.nil?
+    raise ArgumentError, 'Argument is a Duplicate' if value == root.data
+
+    if value < root.data
+      root.left = insert(value, root.left)
+    else
+      root.right = insert(value, root.right)
+    end
+    root
+  end
 end
