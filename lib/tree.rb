@@ -6,30 +6,39 @@ require_relative 'node'
 class Tree
   include Comparable
 
-  attr_accessor :sorted_a, :root, :mid
+  attr_accessor :array, :root, :mid
 
   def initialize(array)
-    @sorted_a = array
+    raise ArgumentError, 'Argument is not an array' unless array.is_a?(Array)
+
+    @array = array.uniq.sort
     @mid = array[(array.length / 2)]
-    @root = sorted_a_to_bst(0, sorted_a.length)
+    @root = build_tree(0, array.length)
   end
 
-  def <=>(other)
+  def <=>(other = root)
     other.left <=> other.right
   end
 
   # recursive sort algorithm
-  def sorted_a_to_bst(start = 0, enda = sorted_a.length)
-    return puts 'Not Array' unless sorted_a.is_a?(Array)
+  def build_tree(start = 0, enda = array.length)
+    return puts 'Not Array' unless array.is_a?(Array)
     return nil if start > enda
 
     mid = (start + enda) / 2
-    root = Node.new(sorted_a[mid])
+    root = Node.new(array[mid])
 
-    root.left = sorted_a_to_bst(start, mid - 1)
+    root.left = build_tree(start, mid - 1)
 
-    root.right = sorted_a_to_bst(mid + 1, enda)
+    root.right = build_tree(mid + 1, enda)
+
     root
+  end
+
+  def pretty_print(node = @root, prefix = '', is_left = true)
+    pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
+    puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
+    pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
   end
 
   def pre_order(node = root)
