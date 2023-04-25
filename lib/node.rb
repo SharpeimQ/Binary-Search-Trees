@@ -9,4 +9,8 @@ class Node
     @left = left
     @right = right
   end
+
+  def inspect_node
+    puts "| @data: #{data} | @left: #{left.data} | @right: #{right.data} |"
+  end
 end

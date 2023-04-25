@@ -91,4 +91,21 @@ class Tree
 
     node.left = min_value(node.left)
   end
+
+  def find(value)
+    node = h_find(value, root)
+    puts node.inspect_node
+  end
+
+  def h_find(value, node)
+    raise ArgumentError, "Value #{value} is not in Tree" if node.nil?
+    return node if value == node.data
+
+    if value < node.data
+      node.left = h_find(value, node.left)
+    elsif value > node.data
+      node.right = h_find(value, node.right)
+    end
+    node
+  end
 end
