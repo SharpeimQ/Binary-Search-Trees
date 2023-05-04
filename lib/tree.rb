@@ -105,42 +105,22 @@ class Tree
     return if node.nil?
 
     queue = []
+    result = []
     queue.push(node)
 
     until queue.empty?
       node = queue.first
 
       yield node if block_given?
-      puts queue.first.data if node.data
+
+      result << queue.first.data
 
       queue.push(node.left) if node.left
       queue.push(node.right) if node.right
 
       queue.shift
     end
-  end
-
-  def level_order_recursion(node = root)
-    raise ArgumentError, 'Tree is Empty' if node.nil?
-
-    queue = []
-    h_level_order_recursion(node, queue)
-  end
-
-  def h_level_order_recursion(node, queue)
-    return if node.nil?
-
-    queue.push(node)
-
-    yield node if block_given?
-    puts node.data
-
-    queue.push(node.left) if node.left
-    queue.push(node.right) if node.right
-
-    queue.shift
-
-    h_level_order_recursion(queue.first, queue)
+    p result.compact
   end
 
   def pre_order(node = root)
