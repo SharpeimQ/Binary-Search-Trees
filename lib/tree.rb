@@ -35,14 +35,6 @@ class Tree
     pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
   end
 
-  def pre_order(node = root)
-    return if node.nil?
-
-    puts node.data
-    pre_order(node.left)
-    pre_order(node.right)
-  end
-
   def insert(value)
     h_insert(value, @root)
   end
@@ -107,5 +99,55 @@ class Tree
       node.right = h_find(value, node.right)
     end
     node
+  end
+
+  def level_order(node = root)
+    return if node.nil?
+
+    queue = []
+    queue.push(node)
+
+    until queue.empty?
+      node = queue.first
+
+      yield node if block_given?
+      puts queue.first.data if node.data
+
+      queue.push(node.left) if node.left
+      queue.push(node.right) if node.right
+
+      queue.shift
+    end
+  end
+
+  def level_order_recursion(node = root)
+    raise ArgumentError, 'Tree is Empty' if node.nil?
+
+    queue = []
+    h_level_order_recursion(node, queue)
+  end
+
+  def h_level_order_recursion(node, queue)
+    return if node.nil?
+
+    queue.push(node)
+
+    yield node if block_given?
+    puts node.data
+
+    queue.push(node.left) if node.left
+    queue.push(node.right) if node.right
+
+    queue.shift
+
+    h_level_order_recursion(queue.first, queue)
+  end
+
+  def pre_order(node = root)
+    return if node.nil?
+
+    puts node.data
+    pre_order(node.left)
+    pre_order(node.right)
   end
 end
