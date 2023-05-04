@@ -13,3 +13,4 @@ bst.pretty_print
 bst.find(5)
 bst.level_order
 p bst.inorder
+p bst.post_order

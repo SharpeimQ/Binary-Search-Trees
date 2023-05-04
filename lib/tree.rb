@@ -145,4 +145,16 @@ class Tree
 
     result
   end
+
+  def post_order(node = root, result = [], &block)
+    return if node.nil?
+
+    post_order(node.left, result, &block)
+    post_order(node.right, result, &block)
+
+    yield node if block_given?
+    result << node.data if node.data
+
+    result
+  end
 end
