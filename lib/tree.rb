@@ -123,11 +123,15 @@ class Tree
     p result.compact
   end
 
-  def pre_order(node = root)
+  def pre_order(node = root, result = [], &block)
     return if node.nil?
 
-    puts node.data
-    pre_order(node.left)
-    pre_order(node.right)
+    yield node if block_given?
+    result << node.data if node.data
+
+    pre_order(node.left, result, &block)
+    pre_order(node.right, result, &block)
+
+    result
   end
 end
