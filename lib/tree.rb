@@ -123,6 +123,17 @@ class Tree
     p result.compact
   end
 
+  def inorder(node = root, result = [], &block)
+    return if node.nil?
+
+    inorder(node.left, result, &block)
+    yield node if block_given?
+    result << node.data if node.data
+    inorder(node.right, result, &block)
+
+    result
+  end
+
   def pre_order(node = root, result = [], &block)
     return if node.nil?
 

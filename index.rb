@@ -12,6 +12,4 @@ bst.delete(4)
 bst.pretty_print
 bst.find(5)
 bst.level_order
-bst.pre_order do |node|
-  p node.data
-end
+p bst.inorder
