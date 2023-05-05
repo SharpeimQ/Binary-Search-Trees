@@ -163,12 +163,12 @@ class Tree
     p h_height(discovered_node)
   end
 
-  def h_height(node, count = 0)
-    return count if node.nil?
+  def h_height(node)
+    return -1 if node.nil?
 
-    h_height(node.left, count += 1)
-    h_height(node.right, count += 1)
+    left_height = h_height(node.left)
+    right_height = h_height(node.right)
 
-    count
+    left_height > right_height ? left_height + 1 : right_height + 1
   end
 end
