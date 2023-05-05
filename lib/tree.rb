@@ -90,15 +90,15 @@ class Tree
   end
 
   def h_find(value, node)
-    raise ArgumentError, "Value #{value} is not in Tree" if node.nil?
-    return node if value == node.data
+    return nil if node.nil?
 
-    if value < node.data
+    if value == node.data
+      node
+    elsif value < node.data
       node.left = h_find(value, node.left)
     elsif value > node.data
       node.right = h_find(value, node.right)
     end
-    node
   end
 
   def level_order(node = root)
@@ -156,5 +156,19 @@ class Tree
     result << node.data if node.data
 
     result
+  end
+
+  def height(value)
+    discovered_node = h_find(value, root)
+    p h_height(discovered_node)
+  end
+
+  def h_height(node, count = 0)
+    return count if node.nil?
+
+    h_height(node.left, count += 1)
+    h_height(node.right, count += 1)
+
+    count
   end
 end
