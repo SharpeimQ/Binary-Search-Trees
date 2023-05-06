@@ -186,4 +186,16 @@ class Tree
       node.right = h_depth(value, node.right, count)
     end
   end
+
+  def balanced?(node = root)
+    return true if node.nil?
+
+    left = h_height(node.left)
+    right = h_height(node.right)
+
+    return false if (left - right).abs > 1
+
+    # can short-circuit code for optimization as it's boolean
+    balanced?(node.left) && balanced?(node.right)
+  end
 end
