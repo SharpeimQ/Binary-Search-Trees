@@ -14,7 +14,6 @@ class Tree
     @root = build_tree(0, sorted_array.length)
   end
 
-  # recursive sort algorithm
   def build_tree(start = 0, enda = array.length)
     return puts 'Not Array' unless sorted_array.is_a?(Array)
     return nil if start > enda
@@ -170,5 +169,21 @@ class Tree
     right_height = h_height(node.right)
 
     left_height > right_height ? left_height + 1 : right_height + 1
+  end
+
+  def depth(value)
+    p h_depth(value)
+  end
+
+  def h_depth(value, node = root, count = 0)
+    return count if value == node.data
+
+    if value < node.data
+      count += 1
+      node.left = h_depth(value, node.left, count)
+    elsif value > node.data
+      count += 1
+      node.right = h_depth(value, node.right, count)
+    end
   end
 end

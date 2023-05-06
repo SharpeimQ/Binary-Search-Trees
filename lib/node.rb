@@ -11,6 +11,8 @@ class Node
   end
 
   def inspect_node
-    puts "| @data: #{data} | @left: #{left.data} | @right: #{right.data} |"
+    print " @data: #{data} " if data
+    print " @left: #{left.data} " if left
+    print " @right: #{right.data} " if right
   end
 end
