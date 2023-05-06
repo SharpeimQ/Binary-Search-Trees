@@ -10,7 +10,7 @@ class Tree
     raise ArgumentError, 'Argument is not an array' unless array.is_a?(Array)
 
     @sorted_array = array.uniq.sort
-    @root = build_tree(0, sorted_array.length)
+    @root = build_tree(0, sorted_array.length - 1)
   end
 
   def build_tree(start = 0, enda = array.length, array = @sorted_array)
@@ -18,7 +18,7 @@ class Tree
     return nil if start > enda
 
     mid = (start + enda) / 2
-    root = Node.new(array[mid], array)
+    root = Node.new(array[mid])
 
     root.left = build_tree(start, mid - 1, array)
 
@@ -34,10 +34,10 @@ class Tree
   end
 
   def insert(value)
-    h_insert(value, @root)
+    h_insert(value)
   end
 
-  def h_insert(value, node)
+  def h_insert(value, node = root)
     return Node.new(value) if node.nil?
     raise ArgumentError, 'Argument is a Duplicate' if value == node.data
 
@@ -93,9 +93,9 @@ class Tree
     if value == node.data
       node
     elsif value < node.data
-      node.left = h_find(value, node.left)
+      h_find(value, node.left)
     elsif value > node.data
-      node.right = h_find(value, node.right)
+      h_find(value, node.right)
     end
   end
 

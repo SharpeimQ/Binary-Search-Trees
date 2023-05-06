@@ -2,7 +2,23 @@
 
 require_relative 'lib/tree'
 
-bst = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
+array = []
+while array.length < 15
+  num = rand(1..100)
+  array << num unless array.include?(num)
+end
 
+bst = Tree.new(array)
 bst.pretty_print
 p bst.balanced?
+p bst.pre_order
+p bst.post_order
+p bst.inorder
+
+bst.pretty_print
+
+bst.insert(120)
+bst.insert(130)
+bst.insert(150)
+
+bst.pretty_print
