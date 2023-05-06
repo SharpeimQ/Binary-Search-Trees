@@ -4,26 +4,25 @@ require_relative 'node'
 
 # balanced BST class
 class Tree
-  attr_accessor :sorted_array, :root, :mid
+  attr_accessor :sorted_array, :root
 
   def initialize(array)
     raise ArgumentError, 'Argument is not an array' unless array.is_a?(Array)
 
     @sorted_array = array.uniq.sort
-    @mid = sorted_array[(sorted_array.length / 2)]
     @root = build_tree(0, sorted_array.length)
   end
 
-  def build_tree(start = 0, enda = array.length)
-    return puts 'Not Array' unless sorted_array.is_a?(Array)
+  def build_tree(start = 0, enda = array.length, array = @sorted_array)
+    return puts 'Not Array' unless array.is_a?(Array)
     return nil if start > enda
 
     mid = (start + enda) / 2
-    root = Node.new(sorted_array[mid])
+    root = Node.new(array[mid], array)
 
-    root.left = build_tree(start, mid - 1)
+    root.left = build_tree(start, mid - 1, array)
 
-    root.right = build_tree(mid + 1, enda)
+    root.right = build_tree(mid + 1, enda, array)
 
     root
   end
@@ -197,5 +196,11 @@ class Tree
 
     # can short-circuit code for optimization as it's boolean
     balanced?(node.left) && balanced?(node.right)
+  end
+
+  def rebalance
+    inorder_arr = inorder
+    @root = build_tree(0, inorder_arr.length, inorder_arr)
+    pretty_print
   end
 end
